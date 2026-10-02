@@ -79,10 +79,11 @@ public class ResizableArraySet<T> implements SetInterface<T> {
     }
 
     @Override
-    public T[] toArray() {
+    public Object[] toArray() {
         return Arrays.copyOf(array, size);  // new snapshot, length == size
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public SetInterface<T> union(SetInterface<T> otherSet) {
         requireNonNull(otherSet);
@@ -90,8 +91,8 @@ public class ResizableArraySet<T> implements SetInterface<T> {
         for (int i = 0; i < size; i++) {
             result.add(array[i]);
         }
-        for (T entry : otherSet.toArray()) {
-            result.add(entry);  // duplicates are rejected by add
+        for (Object entry : otherSet.toArray()) {
+            result.add((T) entry);  // safe: otherSet only holds T; duplicates are rejected by add
         }
         return result;
     }

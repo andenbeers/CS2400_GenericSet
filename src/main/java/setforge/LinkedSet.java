@@ -92,10 +92,9 @@ public class LinkedSet<T> implements SetInterface<T> {
         return containsEntry(anEntry);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public T[] toArray() {
-        T[] result = (T[]) new Object[size];    // new snapshot
+    public Object[] toArray() {
+        Object[] result = new Object[size];    // new snapshot
         int index = 0;
         for (Node<T> n = firstNode; n != null; n = n.next) {
             result[index++] = n.data;
@@ -103,6 +102,7 @@ public class LinkedSet<T> implements SetInterface<T> {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public SetInterface<T> union(SetInterface<T> otherSet) {
         requireNonNull(otherSet);
@@ -110,8 +110,8 @@ public class LinkedSet<T> implements SetInterface<T> {
         for (Node<T> n = firstNode; n != null; n = n.next) {
             result.add(n.data);
         }
-        for (T entry : otherSet.toArray()) {
-            result.add(entry);  // duplicates are rejected by add
+        for (Object entry : otherSet.toArray()) {
+            result.add((T) entry);  // safe: otherSet only holds T; duplicates are rejected by add
         }
         return result;
     }

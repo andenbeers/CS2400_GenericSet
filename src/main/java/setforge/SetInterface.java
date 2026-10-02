@@ -48,10 +48,11 @@ void clear();
  */
 boolean contains(T anEntry);
 /**
- * Creates a new array from our set
- * @return the new array
+ * Creates a new array from our set. The array's runtime type is Object[] (generic arrays
+ * cannot be created without a type token), so callers must not assign it to a T[] variable.
+ * @return a new Object[] snapshot whose length equals the current size; changing it never changes the set
  */
-T[] toArray();
+Object[] toArray();
 /**
  * creates a union between two sets
  * @param otherSet the set to create the union with

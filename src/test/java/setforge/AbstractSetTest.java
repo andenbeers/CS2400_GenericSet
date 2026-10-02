@@ -232,6 +232,20 @@ public abstract class AbstractSetTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    void toArrayWorksForNonObjectTypeArgument() {
+        // Regression: toArray() used to be declared T[] but built an Object[], so a typed caller crashed.
+        SetInterface<String> names = (SetInterface<String>) (SetInterface<?>) newSet();
+        names.add("Ada");
+        Object[] arr = names.toArray();
+        assertEquals(1, arr.length);
+        assertEquals("Ada", arr[0]);
+        for (Object o : names.toArray()) {
+            assertEquals("Ada", o);
+        }
+    }
+
+    @Test
     void toArrayDoesNotTrackLaterChanges() {
         set.add("a");
         Object[] snap = set.toArray();

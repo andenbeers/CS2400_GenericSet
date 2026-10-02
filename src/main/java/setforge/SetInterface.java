@@ -1,4 +1,4 @@
-package main.java.setforge;
+package setforge;
 
 public interface SetInterface<T> {
 
